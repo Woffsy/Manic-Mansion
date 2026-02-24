@@ -17,7 +17,7 @@ class Spiller:
             self.harSau = True
     
     def leggFraSau(self) -> None:
-        if self.harSau and self.sau is not None:
+        if self.harSau and self.sau:
             self.sau.x = self.x
             self.sau.y = self.y
             
