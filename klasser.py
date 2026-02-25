@@ -15,7 +15,7 @@ class Spiller:
         pg.draw.circle(vindu, WHITE, (self.x, self.y), 25)
     
     def flyttSpiller(self):
-        taster:pg.key = pg.key.get_pressed()
+        taster: tuple[bool, ...] = pg.key.get_pressed()
         if taster[pg.K_LEFT]:
             self.x -= self.fart
         if taster[pg.K_RIGHT]:

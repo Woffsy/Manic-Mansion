@@ -3,4 +3,4 @@ VINDU_HOYDE:int = 800
 
 FPS:int = 60
 
-WHITE:tuple = (255, 255, 255)
+WHITE: tuple[int, int, int] = (255, 255, 255)
