@@ -1,6 +1,7 @@
 import pygame as pg
 import os
 from konstanter import *
+from klasser import *
 
 pg.init()
 
@@ -27,14 +28,26 @@ def tegn_bakgrunn(surface: pg.Surface, bilde: pg.Surface) -> None:
 def main() -> None:
     running: bool = True
     
+    omrade = pg.Rect(200, 0, 800, VINDU_HOYDE)
+    
+    spiller = Spiller(100, 100)
+    
+    sauer = [Sau(1100, 200), Sau(1100, 400)]
+    
+    spokelser = [Spokelse(omrade, 500, 500)]
+
     while running:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
             elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 running = False
+        
+        spiller.flyttSpiller()
 
         tegn_bakgrunn(vindu, bakgrunn)
+        pg.draw.rect(vindu, (50, 175, 50), omrade, 3)
+        tegnAlt(vindu, spiller, sauer, spokelser)
         
         pg.display.flip()
         clock.tick(FPS)
