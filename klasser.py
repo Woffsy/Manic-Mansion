@@ -6,15 +6,18 @@ import random
 
 class Spiller:
     def __init__(self, startX:int, startY:int) -> None:
+        self.img = pg.image.load(IMAGE_DIR/"farmer.png")
+        self.img = pg.transform.scale(self.img, (150, 150))
         self.harSau:bool = False
         self.sau:Sau|None = None
         
         self.x:int = startX
         self.y:int = startY
-        self.fart:int = 7
+        self.fart:int = 6
         
     def tegnSpiller(self, vindu:pg.Surface):
-        pg.draw.circle(vindu, WHITE, (self.x, self.y), 25)
+        rect = self.img.get_rect(center=(self.x, self.y))
+        vindu.blit(self.img, rect)
     
     def flyttSpiller(self):
         self.x = max(25, min(self.x, VINDU_BREDDE - 25))
@@ -81,13 +84,17 @@ class Spokelse:
 
 class Sau:
     def __init__(self, startX:int, startY:int) -> None:
+        self.img = pg.image.load(IMAGE_DIR/"sheep.png")
+        self.img = pg.transform.scale(self.img, (100, 100))
         self.iSafeOmrade:bool = False
         
         self.x:int = startX
         self.y:int = startY
     
     def tegnSau(self, vindu: pg.Surface):
-        pg.draw.circle(vindu, (0, 100, 0), (self.x, self.y), 25)
+        rect = self.img.get_rect(center=(self.x, self.y))
+        vindu.blit(self.img, rect)
+        
 
 
 def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[Spokelse]):

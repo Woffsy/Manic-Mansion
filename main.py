@@ -38,7 +38,7 @@ def main() -> None:
     
     sauer = [Sau(1100, 200), Sau(1100, 400)]
     
-    spokelser = [Spokelse(safezones, 500, 500)]
+    spokelser = [Spokelse(safezones, 200, 200)]
 
     while running:
         for event in pg.event.get():
