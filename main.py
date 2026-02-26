@@ -26,6 +26,10 @@ def tegn_bakgrunn(surface: pg.Surface, bilde: pg.Surface) -> None:
             surface.blit(bilde, (x, y))
 
 def main() -> None:
+    safezones = [
+    pg.Rect(0, 0, SAFE_BREDDE, VINDU_HOYDE),
+    pg.Rect(VINDU_BREDDE - SAFE_BREDDE, 0, SAFE_BREDDE, VINDU_HOYDE)
+]
     running: bool = True
     
     omrade = pg.Rect(200, 0, 800, VINDU_HOYDE)
@@ -34,7 +38,7 @@ def main() -> None:
     
     sauer = [Sau(1100, 200), Sau(1100, 400)]
     
-    spokelser = [Spokelse(omrade, 500, 500)]
+    spokelser = [Spokelse(safezones, 500, 500)]
 
     while running:
         for event in pg.event.get():
@@ -44,6 +48,8 @@ def main() -> None:
                 running = False
         
         spiller.flyttSpiller()
+        for spokelse in spokelser:
+            spokelse.flyttSpokelse()
 
         tegn_bakgrunn(vindu, bakgrunn)
         pg.draw.rect(vindu, (50, 175, 50), omrade, 3)
