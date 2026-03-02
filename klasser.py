@@ -66,7 +66,8 @@ class Spiller:
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
         self.safezones = safezones
-        self.fart = random.randint(2, 5)
+        self.fartX = random.randint(2, 5)
+        self.fartY = random.randint(2, 5)
         self.retningX = random.choice([-1, 1])
         self.retningY = random.choice([-1, 1])
         
@@ -85,20 +86,26 @@ class Spokelse:
             return False
     
     def flyttSpokelse(self):
-        self.x += self.retningX * self.fart
+        self.x += self.retningX * self.fartX
 
         if self.x < SAFE_BREDDE:
+            self.fartX = random.randint(2, 5)
+            self.fartY = random.randint(2, 5)
             self.x = SAFE_BREDDE
             self.retningX *= -1
 
         if self.x > VINDU_BREDDE - SAFE_BREDDE - 100:
+            self.fartX = random.randint(2, 5)
+            self.fartY = random.randint(2, 5)
             self.x = VINDU_BREDDE - SAFE_BREDDE - 100
             self.retningX *= -1
         
-        self.y += self.retningY * self.fart
+        self.y += self.retningY * self.fartY
        
         if self.y <= 0 or self.y >= VINDU_HOYDE - 100:
-            self.y -= self.retningY * self.fart
+            self.fartX = random.randint(2, 5)
+            self.fartY = random.randint(2, 5)
+            self.y -= self.retningY * self.fartY
             self.retningY *= -1
 
 class Sau:
