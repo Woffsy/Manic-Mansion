@@ -31,9 +31,7 @@ def main() -> None:
     pg.Rect(VINDU_BREDDE - SAFE_BREDDE, 0, SAFE_BREDDE, VINDU_HOYDE)
 ]
     running: bool = True
-    
-    omrade = pg.Rect(200, 0, 800, VINDU_HOYDE)
-    
+
     spiller = Spiller(100, 100)
     
     sauer = [Sau(1100, 200), Sau(1100, 400)]
@@ -52,8 +50,7 @@ def main() -> None:
             spokelse.flyttSpokelse()
 
         tegn_bakgrunn(vindu, bakgrunn)
-        pg.draw.rect(vindu, (50, 175, 50), omrade, 3)
-        tegnAlt(vindu, spiller, sauer, spokelser)
+        oppdaterAlt(vindu, spiller, sauer, spokelser)
         
         pg.display.flip()
         clock.tick(FPS)

@@ -2,7 +2,7 @@ from __future__ import annotations
 import pygame as pg
 from konstanter import *
 import random
-
+import math
 
 class Spiller:
     def __init__(self, startX:int, startY:int) -> None:
@@ -18,6 +18,9 @@ class Spiller:
     def tegnSpiller(self, vindu:pg.Surface):
         rect = self.img.get_rect(center=(self.x, self.y))
         vindu.blit(self.img, rect)
+        if self.sau:
+            self.sau.x = self.x
+            self.sau.y = self.y
     
     def flyttSpiller(self):
         self.x = max(25, min(self.x, VINDU_BREDDE - 25))
@@ -33,18 +36,15 @@ class Spiller:
             self.y += self.fart
 
 
-    def plukkOppSau(self, sau:Sau) -> None:
-        if not self.harSau:
-            self.sau = sau
-            self.harSau = True
+    def plukkOppSau(self, sauer: list[Sau]) -> None:
+        for s in sauer:
+            if not self.sau and not s.iSafeOmrade and math.sqrt((self.x-s.x)**2+(self.y-s.y)**2) < 25:
+                self.sau = s
     
     def leggFraSau(self) -> None:
-        if self.harSau and self.sau:
-            self.sau.x = self.x
-            self.sau.y = self.y
-            
+        if self.sau and self.x<SAFE_BREDDE:
+            self.sau.iSafeOmrade = True
             self.sau = None
-            self.harSau = False
 
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
@@ -103,3 +103,8 @@ def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[
         s.tegnSau(vindu)
     for s in spokelser:
         s.tegnSpokelse(vindu)
+        
+def oppdaterAlt(vindu:pg.Surface, spiller: Spiller, sauer: list[Sau], spokelser: list[Spokelse]):
+    tegnAlt(vindu, spiller, sauer, spokelser)
+    spiller.plukkOppSau(sauer)
+    spiller.leggFraSau()
