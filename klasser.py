@@ -18,6 +18,9 @@ class Spiller:
         self.y:int = startY
         self.fart:int = 6
         
+        self.liv:int = 3
+        self.poeng:int = 0
+        
     def tegnSpiller(self, vindu:pg.Surface):
         rect = self.img.get_rect(center=(self.x, self.y))
         vindu.blit(self.img, rect)
@@ -48,6 +51,7 @@ class Spiller:
         if self.sau and self.x<SAFE_BREDDE:
             self.sau.iSafeOmrade = True
             self.sau = None
+            self.poeng += 1
     
     def sjekkSpokelseKollisjon(self, spokelser: list[Spokelse]):
         spiller_rect = self.img.get_rect(center=(self.x, self.y))
@@ -57,6 +61,7 @@ class Spiller:
                 self.sau = None
                 self.x = self.startX
                 self.y = self.startY
+                self.liv -= 1
     
     def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):
         self.plukkOppSau(sauer)

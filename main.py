@@ -2,6 +2,7 @@ import pygame as pg
 import os
 from konstanter import *
 from klasser import *
+from score import *
 
 pg.init()
 
@@ -51,6 +52,7 @@ def main() -> None:
 
         tegn_bakgrunn(vindu, bakgrunn)
         oppdaterAlt(vindu, spiller, sauer, spokelser)
+        tavle(vindu, spiller)
         
         pg.display.flip()
         clock.tick(FPS)
