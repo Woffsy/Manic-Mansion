@@ -11,6 +11,9 @@ class Spiller:
         self.harSau:bool = False
         self.sau:Sau|None = None
         
+        self.startX: int = startX
+        self.startY: int = startY
+        
         self.x:int = startX
         self.y:int = startY
         self.fart:int = 6
@@ -45,6 +48,20 @@ class Spiller:
         if self.sau and self.x<SAFE_BREDDE:
             self.sau.iSafeOmrade = True
             self.sau = None
+    
+    def sjekkSpokelseKollisjon(self, spokelser: list[Spokelse]):
+        spiller_rect = self.img.get_rect(center=(self.x, self.y))
+        for s in spokelser:
+            spokelse_rect = pg.Rect(s.x, s.y, s.str, s.str)
+            if spiller_rect.colliderect(spokelse_rect):
+                self.sau = None
+                self.x = self.startX
+                self.y = self.startY
+    
+    def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):
+        self.plukkOppSau(sauer)
+        self.leggFraSau()
+        self.sjekkSpokelseKollisjon(spokelser)
 
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
@@ -53,11 +70,13 @@ class Spokelse:
         self.retningX = random.choice([-1, 1])
         self.retningY = random.choice([-1, 1])
         
+        self.str: int = 100
+        
         self.x:int = startX
         self.y:int = startY
 
     def tegnSpokelse(self, vindu: pg.Surface):
-        pg.draw.rect(vindu, WHITE, (self.x, self.y, 100, 100))
+        pg.draw.rect(vindu, WHITE, (self.x, self.y, self.str, self.str))
     
     def trefferSafezone(self, rect: pg.Rect):
         for sone in self.safezones:
@@ -106,5 +125,4 @@ def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[
         
 def oppdaterAlt(vindu:pg.Surface, spiller: Spiller, sauer: list[Sau], spokelser: list[Spokelse]):
     tegnAlt(vindu, spiller, sauer, spokelser)
-    spiller.plukkOppSau(sauer)
-    spiller.leggFraSau()
+    spiller.oppdaterSpiller(sauer, spokelser)
