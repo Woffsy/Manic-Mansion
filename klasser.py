@@ -66,6 +66,8 @@ class Spiller:
         for s in spokelser:
             spokelse_rect = pg.Rect(s.x, s.y, s.str, s.str)
             if spiller_rect.colliderect(spokelse_rect):
+                if self.sau:
+                    self.sau.plukketOpp = False
                 self.sau = None
                 self.x = self.startX
                 self.y = self.startY
