@@ -137,15 +137,36 @@ class Sau:
         if not self.plukketOpp:
             rect = self.img.get_rect(center=(self.x, self.y))
             vindu.blit(self.img, rect)
+            
+class Hinder:
+    def __init__(self, vindu: pg.Surface) -> None:
+        self.vindu = vindu
+        
+        self.omradeLeft = SAFE_BREDDE
+        self.omradeRight = VINDU_BREDDE-2*SAFE_BREDDE
+        self.omradeTop = 0
+        self.omradeBottom = VINDU_HOYDE
+        
+        self.bredde = 45
+        self.hoyde = 135
+        
+        self.x = random.randint(self.omradeLeft, self.omradeRight)
+        self.y = random.randint(self.omradeTop, self.omradeBottom)
+        
+        self.rect = pg.Rect(self.x, self.y, self.bredde, self.hoyde)
 
+    def tegnHinder(self):
+        pg.draw.rect(self.vindu, BLACK, self.rect)
 
-def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[Spokelse]):
+def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[Spokelse], hinder:list[Hinder]):
     spiller.tegnSpiller(vindu)
     for s in sauer:
         s.tegnSau(vindu)
     for s in spokelser:
         s.tegnSpokelse(vindu)
+    for h in hinder:
+        h.tegnHinder()
         
-def oppdaterAlt(vindu:pg.Surface, spiller: Spiller, sauer: list[Sau], spokelser: list[Spokelse]):
-    tegnAlt(vindu, spiller, sauer, spokelser)
+def oppdaterAlt(vindu:pg.Surface, spiller: Spiller, sauer: list[Sau], spokelser: list[Spokelse], hinder: list[Hinder]):
+    tegnAlt(vindu, spiller, sauer, spokelser, hinder)
     spiller.oppdaterSpiller(sauer, spokelser)

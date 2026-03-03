@@ -38,6 +38,8 @@ def main() -> None:
     sauer = [Sau(1100, 200), Sau(1100, 400), Sau(1100, 600)]
     
     spokelser = [Spokelse(safezones, 200, 200)]
+    
+    hinder = [Hinder(vindu) for _ in range(3)]
 
     while running:
         for event in pg.event.get():
@@ -51,7 +53,7 @@ def main() -> None:
             spokelse.flyttSpokelse()
 
         tegn_bakgrunn(vindu, bakgrunn)
-        oppdaterAlt(vindu, spiller, sauer, spokelser)
+        oppdaterAlt(vindu, spiller, sauer, spokelser, hinder)
         tavle(vindu, spiller)
         
         pg.display.flip()
