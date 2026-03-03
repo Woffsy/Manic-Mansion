@@ -80,6 +80,8 @@ class Spiller:
 
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
+        self.img = pg.image.load(IMAGE_DIR/"spokelse.png")
+        self.img = pg.transform.scale(self.img, (150, 150))
         self.safezones = safezones
         self.fartX = random.randint(2, 5)
         self.fartY = random.randint(2, 5)
@@ -92,7 +94,8 @@ class Spokelse:
         self.y:int = startY
 
     def tegnSpokelse(self, vindu: pg.Surface):
-        pg.draw.rect(vindu, WHITE, (self.x, self.y, self.str, self.str))
+        rect = self.img.get_rect(center=(self.x, self.y))
+        vindu.blit(self.img, rect)
     
     def trefferSafezone(self, rect: pg.Rect):
         for sone in self.safezones:
