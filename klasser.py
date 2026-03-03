@@ -28,6 +28,7 @@ class Spiller:
             rect = self.imgSauFarmer.get_rect(center=(self.x,self.y))
             self.sau.x = self.x
             self.sau.y = self.y
+            vindu.blit(self.imgSauFarmer, rect)
         else:
             rect = self.img.get_rect(center=(self.x, self.y))
             vindu.blit(self.img, rect)
