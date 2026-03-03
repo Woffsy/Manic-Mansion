@@ -8,6 +8,8 @@ class Spiller:
     def __init__(self, startX:int, startY:int) -> None:
         self.img = pg.image.load(IMAGE_DIR/"farmer.png")
         self.img = pg.transform.scale(self.img, (150, 150))
+        self.imgSauFarmer = pg.image.load(IMAGE_DIR/"farmerAndSheep.png")
+        self.imgSauFarmer = pg.transform.scale(self.imgSauFarmer, (150,150))
         self.harSau:bool = False
         self.sau:Sau|None = None
         
@@ -22,11 +24,14 @@ class Spiller:
         self.poeng:int = 0
         
     def tegnSpiller(self, vindu:pg.Surface):
-        rect = self.img.get_rect(center=(self.x, self.y))
-        vindu.blit(self.img, rect)
         if self.sau:
+            rect = self.imgSauFarmer.get_rect(center=(self.x,self.y))
             self.sau.x = self.x
             self.sau.y = self.y
+        else:
+            rect = self.img.get_rect(center=(self.x, self.y))
+            vindu.blit(self.img, rect)
+      
     
     def flyttSpiller(self):
         self.x = max(25, min(self.x, VINDU_BREDDE - 25))
