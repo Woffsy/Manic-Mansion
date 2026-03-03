@@ -23,30 +23,53 @@ class Spiller:
         self.liv:int = 3
         self.poeng:int = 0
         
+        self.spiller_rect = self.img.get_rect(center=(self.x, self.y))
+        
+        
     def tegnSpiller(self, vindu:pg.Surface):
         if self.sau:
             rect = self.imgSauFarmer.get_rect(center=(self.x,self.y))
             self.sau.x = self.x
             self.sau.y = self.y
             vindu.blit(self.imgSauFarmer, rect)
+            self.spiller_rect = self.img.get_rect(center=(self.x, self.y))
+            
         else:
             rect = self.img.get_rect(center=(self.x, self.y))
             vindu.blit(self.img, rect)
+            self.spiller_rect = self.img.get_rect(center=(self.x, self.y))
       
     
-    def flyttSpiller(self):
+    def flyttSpiller(self, hinder:list[Hinder]):
         self.x = max(25, min(self.x, VINDU_BREDDE - 25))
         self.y = max(25, min(self.y, VINDU_HOYDE - 25))
         taster: tuple[bool, ...] = pg.key.get_pressed()
+        dx = 0
+        dy = 0
         if taster[pg.K_LEFT]:
-            self.x -= self.fart
+            dx -= self.fart
         if taster[pg.K_RIGHT]:
-            self.x += self.fart
+            dx += self.fart
         if taster[pg.K_UP]:
-            self.y -= self.fart
+            dy -= self.fart
         if taster[pg.K_DOWN]:
-            self.y += self.fart
+            dy += self.fart
 
+        self.x += dx
+        self.y += dy
+        self.spiller_rect.x += dx
+        self.spiller_rect.y += dy
+        krasj = False
+        
+        for h in hinder:
+            if self.spiller_rect.colliderect(h.rect):
+                krasj = True
+                break
+        if krasj:
+            self.x -= dx
+            self.y -= dy
+            self.spiller_rect.x -= dx
+            self.spiller_rect.y -= dy
 
     def plukkOppSau(self, sauer: list[Sau]) -> None:
         for s in sauer:
@@ -62,16 +85,16 @@ class Spiller:
             self.poeng += 1
     
     def sjekkSpokelseKollisjon(self, spokelser: list[Spokelse]):
-        spiller_rect = self.img.get_rect(center=(self.x, self.y))
         for s in spokelser:
             spokelse_rect = pg.Rect(s.x, s.y, s.str, s.str)
-            if spiller_rect.colliderect(spokelse_rect):
+            if self.spiller_rect.colliderect(spokelse_rect):
                 if self.sau:
                     self.sau.plukketOpp = False
                 self.sau = None
                 self.x = self.startX
                 self.y = self.startY
                 self.liv -= 1
+                
     
     def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):
         self.plukkOppSau(sauer)

@@ -48,7 +48,7 @@ def main() -> None:
             elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 running = False
         
-        spiller.flyttSpiller()
+        spiller.flyttSpiller(hinder)
         for spokelse in spokelser:
             spokelse.flyttSpokelse()
 
