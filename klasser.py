@@ -165,8 +165,8 @@ class Sau:
         
     def tegnSau(self, vindu: pg.Surface):
         if not self.plukketOpp:
-            rect = self.img.get_rect(center=(self.x, self.y))
-            vindu.blit(self.img, rect)
+            self.rect = self.img.get_rect(center=(self.x, self.y))
+            vindu.blit(self.img, self.rect)
             
 class Hinder:
     def __init__(self, vindu: pg.Surface) -> None:
