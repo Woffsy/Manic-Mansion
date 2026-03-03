@@ -54,12 +54,15 @@ class Spiller:
                 self.sau = s
                 self.sau.plukketOpp = True
     
-    def leggFraSau(self) -> None:
+    def leggFraSau(self) -> bool:
         if self.sau and self.x<SAFE_BREDDE:
             self.sau.iSafeOmrade = True
             self.sau.plukketOpp = False
             self.sau = None
             self.poeng += 1
+            return True
+        return False
+
     
     def sjekkSpokelseKollisjon(self, spokelser: list[Spokelse]):
         spiller_rect = self.img.get_rect(center=(self.x, self.y))
@@ -75,8 +78,8 @@ class Spiller:
     
     def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):
         self.plukkOppSau(sauer)
-        self.leggFraSau()
         self.sjekkSpokelseKollisjon(spokelser)
+        return self.leggFraSau()
 
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
@@ -151,4 +154,5 @@ def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[
         
 def oppdaterAlt(vindu:pg.Surface, spiller: Spiller, sauer: list[Sau], spokelser: list[Spokelse]):
     tegnAlt(vindu, spiller, sauer, spokelser)
-    spiller.oppdaterSpiller(sauer, spokelser)
+    return spiller.oppdaterSpiller(sauer, spokelser)
+    

@@ -3,6 +3,7 @@ import os
 from konstanter import *
 from klasser import *
 from score import *
+import random
 
 pg.init()
 
@@ -37,7 +38,7 @@ def main() -> None:
     
     sauer = [Sau(1100, 200), Sau(1100, 400), Sau(1100, 600)]
     
-    spokelser = [Spokelse(safezones, 200, 200)]
+    spokelser = [Spokelse(safezones,0,random.randint(0,VINDU_HOYDE - 100))]
 
     while running:
         for event in pg.event.get():
@@ -45,15 +46,21 @@ def main() -> None:
                 running = False
             elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 running = False
+
+        
+
         
         spiller.flyttSpiller()
         for spokelse in spokelser:
             spokelse.flyttSpokelse()
 
         tegn_bakgrunn(vindu, bakgrunn)
-        oppdaterAlt(vindu, spiller, sauer, spokelser)
+        if oppdaterAlt(vindu, spiller, sauer, spokelser):
+            sauer.append(Sau(1100,random.randint(0,VINDU_HOYDE)))
+            spokelser.append(Spokelse(safezones,0,VINDU_HOYDE - 100))
+
         tavle(vindu, spiller)
-        
+
         pg.display.flip()
         clock.tick(FPS)
         
