@@ -35,7 +35,7 @@ def main() -> None:
 
     spiller = Spiller(100, 100)
     
-    sauer = [Sau(1100, 200), Sau(1100, 400)]
+    sauer = [Sau(1100, 200), Sau(1100, 400), Sau(1100, 600)]
     
     spokelser = [Spokelse(safezones, 200, 200)]
 
