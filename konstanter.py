@@ -2,7 +2,7 @@ from pathlib import Path
 
 IMAGE_DIR = Path(__file__).parent/"Bilder"
 
-SAFE_BREDDE = 200
+SAFE_BREDDE:int = 200
 
 
 
