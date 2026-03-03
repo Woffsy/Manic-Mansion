@@ -2,7 +2,6 @@ from __future__ import annotations
 import pygame as pg
 from konstanter import *
 import random
-import math
 
 class Spiller:
     def __init__(self, startX:int, startY:int) -> None:
@@ -73,7 +72,7 @@ class Spiller:
 
     def plukkOppSau(self, sauer: list[Sau]) -> None:
         for s in sauer:
-            if not self.sau and not s.iSafeOmrade and math.sqrt((self.x-s.x)**2+(self.y-s.y)**2) < 25:
+            if not self.sau and not s.iSafeOmrade and self.spiller_rect.colliderect(s.rect):
                 self.sau = s
                 self.sau.plukketOpp = True
     
@@ -159,6 +158,8 @@ class Sau:
         self.x:int = startX
         self.y:int = startY
     
+        self.rect:pg.Rect = self.img.get_rect(center=(self.x, self.y))
+        
     def tegnSau(self, vindu: pg.Surface):
         if not self.plukketOpp:
             rect = self.img.get_rect(center=(self.x, self.y))
