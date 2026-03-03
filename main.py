@@ -57,6 +57,8 @@ def main() -> None:
         if oppdaterAlt(vindu, spiller, sauer, spokelser, hinder):
             sauer.append(Sau(1100,random.randint(0,VINDU_HOYDE)))
             spokelser.append(Spokelse(safezones,0,VINDU_HOYDE - 100))
+            hinder.append(Hinder(vindu))
+
 
         tavle(vindu, spiller)
 

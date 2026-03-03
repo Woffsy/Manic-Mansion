@@ -7,9 +7,9 @@ import math
 class Spiller:
     def __init__(self, startX:int, startY:int) -> None:
         self.img = pg.image.load(IMAGE_DIR/"farmer.png")
-        self.img = pg.transform.scale(self.img, (150, 150))
+        self.img = pg.transform.scale(self.img, (125, 125))
         self.imgSauFarmer = pg.image.load(IMAGE_DIR/"farmerAndSheep.png")
-        self.imgSauFarmer = pg.transform.scale(self.imgSauFarmer, (150,150))
+        self.imgSauFarmer = pg.transform.scale(self.imgSauFarmer, (125,125))
         self.harSau:bool = False
         self.sau:Sau|None = None
         
@@ -107,7 +107,7 @@ class Spiller:
 class Spokelse:
     def __init__(self, safezones:list[pg.Rect], startX:int, startY:int) -> None:
         self.img = pg.image.load(IMAGE_DIR/"spokelse.png")
-        self.img = pg.transform.scale(self.img, (150, 150))
+        self.img = pg.transform.scale(self.img, (100, 100))
         self.safezones = safezones
         self.fartX = random.randint(2, 5)
         self.fartY = random.randint(2, 5)
@@ -176,8 +176,8 @@ class Hinder:
         self.omradeTop = 0
         self.omradeBottom = VINDU_HOYDE
         
-        self.bredde = 45
-        self.hoyde = 135
+        self.bredde = 35
+        self.hoyde = 90
         
         self.x = random.randint(self.omradeLeft, self.omradeRight)
         self.y = random.randint(self.omradeTop, self.omradeBottom)
