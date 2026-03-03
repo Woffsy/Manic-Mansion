@@ -185,7 +185,7 @@ class Hinder:
         self.rect = pg.Rect(self.x, self.y, self.bredde, self.hoyde)
 
     def tegnHinder(self):
-        pg.draw.rect(self.vindu, BLACK, self.rect)
+        pg.draw.rect(self.vindu, BROWN, self.rect)
 
 def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[Spokelse], hinder:list[Hinder]):
     spiller.tegnSpiller(vindu)
