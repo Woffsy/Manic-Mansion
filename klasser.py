@@ -46,10 +46,12 @@ class Spiller:
         for s in sauer:
             if not self.sau and not s.iSafeOmrade and math.sqrt((self.x-s.x)**2+(self.y-s.y)**2) < 25:
                 self.sau = s
+                self.sau.plukketOpp = True
     
     def leggFraSau(self) -> None:
         if self.sau and self.x<SAFE_BREDDE:
             self.sau.iSafeOmrade = True
+            self.sau.plukketOpp = False
             self.sau = None
             self.poeng += 1
     
@@ -118,14 +120,15 @@ class Sau:
         self.img = pg.image.load(IMAGE_DIR/"sheep.png")
         self.img = pg.transform.scale(self.img, (100, 100))
         self.iSafeOmrade:bool = False
+        self.plukketOpp:bool = False
         
         self.x:int = startX
         self.y:int = startY
     
     def tegnSau(self, vindu: pg.Surface):
-        rect = self.img.get_rect(center=(self.x, self.y))
-        vindu.blit(self.img, rect)
-        
+        if not self.plukketOpp:
+            rect = self.img.get_rect(center=(self.x, self.y))
+            vindu.blit(self.img, rect)
 
 
 def tegnAlt(vindu: pg.Surface, spiller:Spiller, sauer:list[Sau], spokelser:list[Spokelse]):
