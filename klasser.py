@@ -128,12 +128,6 @@ class Spokelse:
         rect = self.img.get_rect(center=(self.x, self.y))
         vindu.blit(self.img, rect)
     
-    def trefferSafezone(self, rect: pg.Rect):
-        for sone in self.safezones:
-            if rect.colliderect(sone):
-                return True
-        return False
-    
     def flyttSpokelse(self):
         rect = self.img.get_rect(center=(self.x, self.y))
 
