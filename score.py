@@ -5,6 +5,7 @@ from klasser import *
 pg.font.init()
 
 font = pg.font.SysFont("Arial", 24)
+gameoverFont = pg.font.SysFont("Arial", 48)
 
 def tavle(vindu:pg.Surface, spiller:Spiller):
     scoreTekst = font.render(f"Score: {spiller.poeng}", True, BLACK)
@@ -15,7 +16,7 @@ def tavle(vindu:pg.Surface, spiller:Spiller):
     
     if spiller.liv == 0:
         vindu.fill(WHITE, (0, 0, VINDU_BREDDE, VINDU_HOYDE))
-        gameoverTekst = font.render(f"Game Over\nScore: {spiller.poeng}", True, BLACK)
+        gameoverTekst = gameoverFont.render(f"Game Over\nScore: {spiller.poeng}", True, BLACK)
         tekstRect = gameoverTekst.get_rect(center=vindu.get_rect().center)
         
         vindu.blit(gameoverTekst, tekstRect)

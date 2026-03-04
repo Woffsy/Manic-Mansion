@@ -32,11 +32,13 @@ class Spiller:
             self.sau.y = self.y
             vindu.blit(self.imgSauFarmer, rect)
             self.spiller_rect = self.img.get_rect(center=(self.x, self.y))
+
             
         else:
             rect = self.img.get_rect(center=(self.x, self.y))
             vindu.blit(self.img, rect)
             self.spiller_rect = self.img.get_rect(center=(self.x, self.y))
+            
       
     
     def flyttSpiller(self, hinder:list[Hinder]):
@@ -90,7 +92,7 @@ class Spiller:
     
     def sjekkSpokelseKollisjon(self, spokelser: list[Spokelse]):
         for s in spokelser:
-            spokelse_rect = pg.Rect(s.x, s.y, s.str, s.str)
+            spokelse_rect = pg.Rect(s.img.get_rect(center=(s.x, s.y)))
             if self.spiller_rect.colliderect(spokelse_rect):
                 if self.sau:
                     self.sau.plukketOpp = False
@@ -99,6 +101,7 @@ class Spiller:
                 self.y = self.startY
                 self.liv -= 1
                 self.fart = 6
+                print(f"Kolliderte med spøkelse i {s.x, s.y}")
                 
     
     def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):
@@ -129,30 +132,42 @@ class Spokelse:
         for sone in self.safezones:
             if rect.colliderect(sone):
                 return True
-            return False
+        return False
     
     def flyttSpokelse(self):
+        rect = self.img.get_rect(center=(self.x, self.y))
+
         self.x += self.retningX * self.fartX
+        rect.centerx = self.x
 
-        if self.x < SAFE_BREDDE:
+        if rect.left < SAFE_BREDDE:
+            rect.left = SAFE_BREDDE
+            self.x = rect.centerx
+            self.retningX *= -1
             self.fartX = random.randint(2, 5)
             self.fartY = random.randint(2, 5)
-            self.x = SAFE_BREDDE
+        elif rect.right > VINDU_BREDDE - SAFE_BREDDE:
+            rect.right = VINDU_BREDDE - SAFE_BREDDE
+            self.x = rect.centerx
             self.retningX *= -1
-
-        if self.x > VINDU_BREDDE - SAFE_BREDDE - 100:
             self.fartX = random.randint(2, 5)
             self.fartY = random.randint(2, 5)
-            self.x = VINDU_BREDDE - SAFE_BREDDE - 100
-            self.retningX *= -1
-        
+
         self.y += self.retningY * self.fartY
-       
-        if self.y <= 0 or self.y >= VINDU_HOYDE - 100:
+        rect.centery = self.y
+
+        if rect.top < 0:
+            rect.top = 0
+            self.y = rect.centery
+            self.retningY *= -1
             self.fartX = random.randint(2, 5)
             self.fartY = random.randint(2, 5)
-            self.y -= self.retningY * self.fartY
+        elif rect.bottom > VINDU_HOYDE:
+            rect.bottom = VINDU_HOYDE
+            self.y = rect.centery
             self.retningY *= -1
+            self.fartX = random.randint(2, 5)
+            self.fartY = random.randint(2, 5)
 
 class Sau:
     def __init__(self, startX:int, startY:int) -> None:

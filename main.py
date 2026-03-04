@@ -54,9 +54,11 @@ def main() -> None:
             spokelse.flyttSpokelse()
 
         tegn_bakgrunn(vindu, bakgrunn)
+        for s in safezones:
+            pg.draw.rect(vindu, WHITE, s, 2)
         if oppdaterAlt(vindu, spiller, sauer, spokelser, hinder):
             sauer.append(Sau(1100,random.randint(0,VINDU_HOYDE)))
-            spokelser.append(Spokelse(safezones,0,VINDU_HOYDE - 100))
+            spokelser.append(Spokelse(safezones,random.randint(100, VINDU_BREDDE-2*SAFE_BREDDE),random.randint(0, VINDU_HOYDE - 100)))
             hinder.append(Hinder(vindu))
 
 
