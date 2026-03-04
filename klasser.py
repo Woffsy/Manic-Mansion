@@ -75,6 +75,7 @@ class Spiller:
             if not self.sau and not s.iSafeOmrade and self.spiller_rect.colliderect(s.rect):
                 self.sau = s
                 self.sau.plukketOpp = True
+                self.fart = 4
     
     def leggFraSau(self) -> bool:
         if self.sau and self.x<SAFE_BREDDE:
@@ -82,6 +83,7 @@ class Spiller:
             self.sau.plukketOpp = False
             self.sau = None
             self.poeng += 1
+            self.fart = 6
             return True
         return False
 
@@ -96,6 +98,7 @@ class Spiller:
                 self.x = self.startX
                 self.y = self.startY
                 self.liv -= 1
+                self.fart = 6
                 
     
     def oppdaterSpiller(self, sauer: list[Sau], spokelser: list[Spokelse]):

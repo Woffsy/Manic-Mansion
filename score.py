@@ -12,3 +12,10 @@ def tavle(vindu:pg.Surface, spiller:Spiller):
     
     vindu.blit(scoreTekst, (10, 10))
     vindu.blit(livTekst, (10, 40))
+    
+    if spiller.liv == 0:
+        vindu.fill(WHITE, (0, 0, VINDU_BREDDE, VINDU_HOYDE))
+        gameoverTekst = font.render(f"Game Over\nScore: {spiller.poeng}", True, BLACK)
+        tekstRect = gameoverTekst.get_rect(center=vindu.get_rect().center)
+        
+        vindu.blit(gameoverTekst, tekstRect)
